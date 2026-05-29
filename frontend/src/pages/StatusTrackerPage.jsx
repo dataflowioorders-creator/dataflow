@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../services/api';
+import { api, BASE_URL } from '../services/api';
 import { Search, ClipboardList, CheckCircle2, Circle, Clock, Loader2, ArrowRight, Download, CreditCard, Star } from 'lucide-react';
 
 const StatusTrackerPage = ({ token, user }) => {
@@ -90,7 +90,7 @@ const StatusTrackerPage = ({ token, user }) => {
       setSearchError('');
       setSingleOrder(null);
 
-      const response = await fetch(`http://localhost:5000/api/orders/tracker/${searchId.trim()}`);
+      const response = await fetch(`${BASE_URL}/api/orders/tracker/${searchId.trim()}`);
       if (!response.ok) {
         throw new Error('Project build node not registered or inactive.');
       }
@@ -179,7 +179,7 @@ const StatusTrackerPage = ({ token, user }) => {
                 await api.orders.acceptAmount(order._id, token);
                 // Refresh searched order
                 if (singleOrder && singleOrder._id === order._id) {
-                  const response = await fetch(`http://localhost:5000/api/orders/tracker/${order._id}`);
+                  const response = await fetch(`${BASE_URL}/api/orders/tracker/${order._id}`);
                   const data = await response.json();
                   setSingleOrder(data);
                 }
@@ -280,7 +280,7 @@ const StatusTrackerPage = ({ token, user }) => {
                   singleOrder.deliveredFileUrl ? (
                     singleOrder.isReviewed ? (
                       <a 
-                        href={`http://localhost:5000${singleOrder.deliveredFileUrl}`} 
+                        href={`${BASE_URL}${singleOrder.deliveredFileUrl}`} 
                         download={singleOrder.deliveredFileName}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -414,7 +414,7 @@ const StatusTrackerPage = ({ token, user }) => {
                         order.deliveredFileUrl ? (
                           order.isReviewed ? (
                             <a 
-                              href={`http://localhost:5000${order.deliveredFileUrl}`} 
+                              href={`${BASE_URL}${order.deliveredFileUrl}`} 
                               download={order.deliveredFileName}
                               target="_blank"
                               rel="noopener noreferrer"

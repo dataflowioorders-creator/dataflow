@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { api } from '../services/api';
+import { api, BASE_URL } from '../services/api';
 import { 
   LayoutDashboard, ClipboardList, ShieldAlert, Cpu, 
   Trash2, Plus, RefreshCw, Star, Download, Upload, Sparkles, Edit3, Settings, X, Image
@@ -346,7 +346,7 @@ const AdminDashboard = ({ token, user }) => {
                               </span>
                               {order.paymentScreenshotUrl && (
                                 <a 
-                                  href={`http://localhost:5000${order.paymentScreenshotUrl}`} 
+                                  href={`${BASE_URL}${order.paymentScreenshotUrl}`} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-1 text-[9px] text-cyber-cyan hover:underline font-mono"
@@ -371,7 +371,7 @@ const AdminDashboard = ({ token, user }) => {
                             <p className="text-[11px] text-slate-300 leading-snug mb-2 line-clamp-3">{order.description}</p>
                             {order.fileUrl && (
                               <a 
-                                href={`http://localhost:5000${order.fileUrl}`} 
+                                href={`${BASE_URL}${order.fileUrl}`} 
                                 download
                                 className="inline-flex items-center gap-1 text-[10px] text-cyber-cyan hover:underline font-mono"
                               >
@@ -458,7 +458,7 @@ const AdminDashboard = ({ token, user }) => {
                                   {order.deliveredFileName}
                                 </span>
                                 <a 
-                                  href={`http://localhost:5000${order.deliveredFileUrl}`} 
+                                  href={`${BASE_URL}${order.deliveredFileUrl}`} 
                                   download={order.deliveredFileName}
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -492,7 +492,7 @@ const AdminDashboard = ({ token, user }) => {
                             {/* Inline Payment Screenshot Receipt */}
                             {order.paymentScreenshotUrl && (
                               <a 
-                                href={`http://localhost:5000${order.paymentScreenshotUrl}`} 
+                                href={`${BASE_URL}${order.paymentScreenshotUrl}`} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="w-full flex items-center justify-center gap-1.5 px-2 py-1.5 rounded bg-cyan-950/40 hover:bg-cyan-900 border border-cyan-500/30 text-[9px] font-rajdhani text-cyan-300 uppercase tracking-widest font-bold transition-all text-center"

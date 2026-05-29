@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { api } from '../services/api';
+import { api, BASE_URL } from '../services/api';
 import { ShieldCheck, Lock, Loader2, CheckCircle2, Cpu, Upload, Image as ImageIcon, QrCode } from 'lucide-react';
 import gpayQrImg from '../assets/gpay_qr.png';
 
@@ -34,7 +34,7 @@ const PaymentPage = ({ token, user }) => {
     try {
       setLoading(true);
       setError('');
-      const response = await fetch(`http://localhost:5000/api/orders/tracker/${orderId}`);
+      const response = await fetch(`${BASE_URL}/api/orders/tracker/${orderId}`);
       if (!response.ok) {
         throw new Error('Project node not found in register.');
       }
