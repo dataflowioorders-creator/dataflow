@@ -750,6 +750,10 @@ const AdminDashboard = ({ token, user }) => {
                           <option value="Terminal">Terminal (Scripting/Mini)</option>
                           <option value="Layers">Layers (Major/Full Stack)</option>
                           <option value="Palette">Palette (Logo/Design)</option>
+                          <option value="MessageCircle">MessageCircle (Social/Chat)</option>
+                          <option value="Bot">Bot (Automation/Bots)</option>
+                          <option value="Smartphone">Smartphone (Mobile/Apps)</option>
+                          <option value="Server">Server (Backend/Cloud)</option>
                         </select>
                       </div>
 

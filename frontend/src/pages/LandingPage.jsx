@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import {
   FileText, BookOpen, Terminal, Layers, Cpu, Globe, Palette,
-  Star, Send, Mail, Phone, ArrowRight, Code, MessageCircle
+  Star, Send, Mail, Phone, ArrowRight, Code, MessageCircle, Bot, Smartphone, Server
 } from 'lucide-react';
 
 const InstagramIcon = (props) => (
@@ -32,7 +32,11 @@ const iconMap = {
   Layers: Layers,
   Cpu: Cpu,
   Globe: Globe,
-  Palette: Palette
+  Palette: Palette,
+  MessageCircle: MessageCircle,
+  Bot: Bot,
+  Smartphone: Smartphone,
+  Server: Server
 };
 
 const LandingPage = ({ user }) => {

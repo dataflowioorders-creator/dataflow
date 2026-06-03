@@ -23,6 +23,7 @@ const OrderPage = ({ token, user }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [submittedOrder, setSubmittedOrder] = useState(null);
+  const [servicesList, setServicesList] = useState([]);
 
   useEffect(() => {
     // Autofill name and email if logged in
@@ -38,6 +39,18 @@ const OrderPage = ({ token, user }) => {
       setService(location.state.preSelectedService);
     }
   }, [location]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const data = await api.services.getAll();
+        setServicesList(data);
+      } catch (err) {
+        console.error('Failed to load services:', err);
+      }
+    };
+    fetchServices();
+  }, []);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -243,13 +256,9 @@ const OrderPage = ({ token, user }) => {
                     className="w-full px-3 py-2 text-xs rounded glass-input bg-cyber-dark text-slate-200"
                   >
                     <option value="">Select service Node</option>
-                    <option value="Journal & Research Papers">Journal & Research Papers</option>
-                    <option value="Project Documentation">Project Documentation</option>
-                    <option value="Mini Projects">Mini Projects</option>
-                    <option value="Major Projects">Major Projects</option>
-                    <option value="AI & ML Projects">AI & ML Projects</option>
-                    <option value="Web Development">Web Development</option>
-                    <option value="Logo Designing">Logo Designing</option>
+                    {servicesList.map((srv) => (
+                      <option key={srv._id} value={srv.title}>{srv.title}</option>
+                    ))}
                   </select>
                 </div>
 
