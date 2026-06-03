@@ -23,42 +23,24 @@ export const registerUser = async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      if (userExists.isVerified) {
-        return res.status(400).json({ message: 'User already exists' });
-      } else {
-        // If user registered before but never verified, overwrite their profile or keep it
-        userExists.name = name;
-        userExists.password = password;
-        userExists.role = assignedRole;
-        await userExists.save();
-      }
-    } else {
-      // Create user (defaults to isVerified: false)
-      await User.create({
-        name,
-        email,
-        password,
-        role: assignedRole,
-        isVerified: false,
-      });
+      return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Generate 6-digit verification code
-    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-    // Save/Overwrite OTP code in database
-    await OTP.findOneAndDelete({ email });
-    await OTP.create({
+    // Create user (verified by default)
+    const user = await User.create({
+      name,
       email,
-      otp: otpCode,
+      password,
+      role: assignedRole,
+      isVerified: true,
     });
 
-    // Dispatch verification code to email
-    await sendOTPEmailNotification(email, otpCode);
-
     res.status(201).json({
-      message: 'Verification OTP sent to email. Complete authentication to sign in.',
-      email,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -160,20 +142,7 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Check if account email is verified
-    if (!user.isVerified) {
-      // Trigger new OTP so user doesn't get stuck
-      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-      await OTP.findOneAndDelete({ email });
-      await OTP.create({ email, otp: otpCode });
-      await sendOTPEmailNotification(email, otpCode);
 
-      return res.status(403).json({
-        message: 'Your email address is unverified. We sent a new verification code to your mailbox.',
-        isUnverified: true,
-        email: user.email,
-      });
-    }
 
     res.json({
       _id: user._id,
