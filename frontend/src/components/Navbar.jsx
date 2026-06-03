@@ -10,34 +10,9 @@ const Navbar = ({ user, handleLogout }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Default to dark theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-    if (savedTheme === 'light') {
-      document.documentElement.classList.add('light-mode');
-      document.body.style.backgroundColor = '#f8fafc';
-      document.body.style.color = '#0f172a';
-    } else {
-      document.documentElement.classList.remove('light-mode');
-      document.body.style.backgroundColor = '#05040a';
-      document.body.style.color = '#e2e8f0';
-    }
+    document.body.style.backgroundColor = '#05040a';
+    document.body.style.color = '#e2e8f0';
   }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    if (newTheme === 'light') {
-      document.documentElement.classList.add('light-mode');
-      document.body.style.backgroundColor = '#f8fafc';
-      document.body.style.color = '#0f172a';
-    } else {
-      document.documentElement.classList.remove('light-mode');
-      document.body.style.backgroundColor = '#05040a';
-      document.body.style.color = '#e2e8f0';
-    }
-  };
 
   const isActive = (path) => {
     return location.pathname === path ? 'text-cyber-cyan border-b-2 border-cyber-cyan font-semibold' : 'text-slate-300 hover:text-cyber-cyan transition-colors';
@@ -63,18 +38,22 @@ const Navbar = ({ user, handleLogout }) => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8 font-rajdhani text-lg uppercase tracking-wide">
-          <Link to="/" className={isActive('/')}>Home</Link>
-          <a href="#services" className="text-slate-300 hover:text-cyber-cyan transition-colors" onClick={() => {
+          <Link to="/" className={isActive('/')}>HOME</Link>
+          <button onClick={() => {
             if (location.pathname !== '/') navigate('/');
-          }}>Services</a>
-          <a href="#projects" className="text-slate-300 hover:text-cyber-cyan transition-colors" onClick={() => {
+            setTimeout(() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }), 100);
+          }} className="text-slate-300 hover:text-cyber-cyan transition-colors uppercase">SERVICES</button>
+          
+          <button onClick={() => {
             if (location.pathname !== '/') navigate('/');
-          }}>Projects</a>
+            setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100);
+          }} className="text-slate-300 hover:text-cyber-cyan transition-colors uppercase">PROJECTS</button>
+          
           {(!user || user.role !== 'admin') && (
             <>
               <div className="relative group">
-                <button className={`flex items-center gap-1 transition-colors py-4 ${location.pathname.startsWith('/order') || location.pathname.startsWith('/status') ? 'text-cyber-cyan font-bold drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]' : 'text-slate-300 hover:text-cyber-cyan'}`}>
-                  Orders
+                <button className={`flex items-center gap-1 transition-colors py-4 uppercase ${location.pathname.startsWith('/order') || location.pathname.startsWith('/status') ? 'text-cyber-cyan font-bold drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]' : 'text-slate-300 hover:text-cyber-cyan'}`}>
+                  ORDERS
                   <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -82,34 +61,27 @@ const Navbar = ({ user, handleLogout }) => {
                 <div className="absolute left-0 top-full mt-[-10px] w-56 rounded-md shadow-lg bg-[#0a0816] border border-purple-500/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden backdrop-blur-md">
                   <div className="py-1 flex flex-col">
                     <Link to="/order" className={`px-4 py-3 text-sm font-rajdhani font-semibold uppercase tracking-wide transition-colors ${location.pathname === '/order' ? 'bg-cyber-cyan/20 text-cyber-cyan' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'}`}>
-                      Place Order
+                      PLACE ORDER
                     </Link>
                     <Link to="/status" className={`px-4 py-3 text-sm font-rajdhani font-semibold uppercase tracking-wide transition-colors ${location.pathname === '/status' ? 'bg-cyber-cyan/20 text-cyber-cyan' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'}`}>
-                      Track Order
+                      TRACK ORDER
                     </Link>
                     <Link to="/status" className={`px-4 py-3 text-sm font-rajdhani font-semibold uppercase tracking-wide transition-colors ${location.pathname === '/status' ? 'bg-cyber-cyan/20 text-cyber-cyan' : 'text-slate-300 hover:bg-purple-900/40 hover:text-white'}`}>
-                      My Orders
+                      MY ORDERS
                     </Link>
                   </div>
                 </div>
               </div>
-              <a href="#contact" className="text-slate-300 hover:text-cyber-cyan transition-colors" onClick={() => {
+              <button onClick={() => {
                 if (location.pathname !== '/') navigate('/');
-              }}>Contact</a>
+                setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100);
+              }} className="text-slate-300 hover:text-cyber-cyan transition-colors uppercase">CONTACT</button>
             </>
           )}
         </div>
 
         {/* Action Controls */}
         <div className="hidden md:flex items-center gap-4">
-          {/* Theme Toggle */}
-          <button 
-            onClick={toggleTheme} 
-            className="p-2 rounded-lg border border-purple-500/20 text-slate-300 hover:text-cyber-cyan hover:border-cyber-cyan/30 transition-all"
-            title="Toggle Theme"
-          >
-            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
 
           {user ? (
             <div className="flex items-center gap-4">
@@ -146,12 +118,6 @@ const Navbar = ({ user, handleLogout }) => {
 
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center gap-3">
-          <button 
-            onClick={toggleTheme} 
-            className="p-1.5 rounded-lg border border-purple-500/20 text-slate-300"
-          >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
           
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -166,18 +132,18 @@ const Navbar = ({ user, handleLogout }) => {
       {/* Mobile Drawer */}
       {isOpen && (
         <div className="md:hidden mt-4 pt-4 border-t border-purple-950/40 flex flex-col gap-4 font-rajdhani text-lg uppercase tracking-wide">
-          <Link to="/" className="text-slate-300 hover:text-cyber-cyan py-1" onClick={closeMobileMenu}>Home</Link>
-          <a href="#services" className="text-slate-300 hover:text-cyber-cyan py-1" onClick={() => { closeMobileMenu(); if (location.pathname !== '/') navigate('/'); }}>Services</a>
-          <a href="#projects" className="text-slate-300 hover:text-cyber-cyan py-1" onClick={() => { closeMobileMenu(); if (location.pathname !== '/') navigate('/'); }}>Projects</a>
+          <Link to="/" className="text-slate-300 hover:text-cyber-cyan py-1" onClick={closeMobileMenu}>HOME</Link>
+          <button className="text-slate-300 hover:text-cyber-cyan py-1 text-left uppercase" onClick={() => { closeMobileMenu(); if (location.pathname !== '/') navigate('/'); setTimeout(() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }), 100); }}>SERVICES</button>
+          <button className="text-slate-300 hover:text-cyber-cyan py-1 text-left uppercase" onClick={() => { closeMobileMenu(); if (location.pathname !== '/') navigate('/'); setTimeout(() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }), 100); }}>PROJECTS</button>
           {(!user || user.role !== 'admin') && (
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <span className="text-purple-400 font-bold border-b border-purple-900/30 pb-1 text-sm tracking-widest">Orders Management</span>
-                <Link to="/order" className="text-slate-300 hover:text-cyber-cyan py-1 pl-4" onClick={closeMobileMenu}>Place Order</Link>
-                <Link to="/status" className="text-slate-300 hover:text-cyber-cyan py-1 pl-4" onClick={closeMobileMenu}>Track Order</Link>
-                <Link to="/status" className="text-slate-300 hover:text-cyber-cyan py-1 pl-4" onClick={closeMobileMenu}>My Orders</Link>
+                <span className="text-purple-400 font-bold border-b border-purple-900/30 pb-1 text-sm tracking-widest uppercase">ORDERS MANAGEMENT</span>
+                <Link to="/order" className="text-slate-300 hover:text-cyber-cyan py-1 pl-4 uppercase" onClick={closeMobileMenu}>PLACE ORDER</Link>
+                <Link to="/status" className="text-slate-300 hover:text-cyber-cyan py-1 pl-4 uppercase" onClick={closeMobileMenu}>TRACK ORDER</Link>
+                <Link to="/status" className="text-slate-300 hover:text-cyber-cyan py-1 pl-4 uppercase" onClick={closeMobileMenu}>MY ORDERS</Link>
               </div>
-              <a href="#contact" className="text-slate-300 hover:text-cyber-cyan py-1" onClick={() => { closeMobileMenu(); if (location.pathname !== '/') navigate('/'); }}>Contact</a>
+              <button className="text-slate-300 hover:text-cyber-cyan py-1 text-left uppercase" onClick={() => { closeMobileMenu(); if (location.pathname !== '/') navigate('/'); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 100); }}>CONTACT</button>
             </div>
           )}
           
