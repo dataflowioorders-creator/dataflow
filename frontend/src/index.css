@@ -66,6 +66,21 @@ body {
   color: #e2e8f0;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, filter 0.3s ease;
+}
+
+/* Light Mode Magic Override */
+html.light-mode {
+  background-color: #f5f6fa;
+}
+.light-mode body {
+  filter: invert(1) hue-rotate(180deg);
+  background-color: #05040a; /* Will be inverted to light gray/white */
+}
+/* Re-invert images so they don't look like negatives */
+.light-mode img, 
+.light-mode video {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 /* Glassmorphism utilities */

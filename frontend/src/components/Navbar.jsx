@@ -10,9 +10,25 @@ const Navbar = ({ user, handleLogout }) => {
   const location = useLocation();
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#05040a';
-    document.body.style.color = '#e2e8f0';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+    if (savedTheme === 'light') {
+      document.documentElement.classList.add('light-mode');
+    } else {
+      document.documentElement.classList.remove('light-mode');
+    }
   }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    if (newTheme === 'light') {
+      document.documentElement.classList.add('light-mode');
+    } else {
+      document.documentElement.classList.remove('light-mode');
+    }
+  };
 
   const isActive = (path) => {
     return location.pathname === path ? 'text-cyber-cyan border-b-2 border-cyber-cyan font-semibold' : 'text-slate-300 hover:text-cyber-cyan transition-colors';
@@ -82,6 +98,14 @@ const Navbar = ({ user, handleLogout }) => {
 
         {/* Action Controls */}
         <div className="hidden md:flex items-center gap-4">
+          {/* Theme Toggle */}
+          <button 
+            onClick={toggleTheme} 
+            className="p-2 rounded-lg border border-purple-500/20 text-slate-300 hover:text-cyber-cyan hover:border-cyber-cyan/30 transition-all"
+            title="Toggle Theme"
+          >
+            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
 
           {user ? (
             <div className="flex items-center gap-4">
@@ -118,6 +142,12 @@ const Navbar = ({ user, handleLogout }) => {
 
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center gap-3">
+          <button 
+            onClick={toggleTheme} 
+            className="p-1.5 rounded-lg border border-purple-500/20 text-slate-300"
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
           
           <button
             onClick={() => setIsOpen(!isOpen)}
