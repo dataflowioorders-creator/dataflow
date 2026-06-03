@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Bot, User, Cpu, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { api } from '../services/api';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,11 +14,27 @@ const Chatbot = () => {
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [dynamicServices, setDynamicServices] = useState('We specialize in: \n• Journal & Research Papers\n• Project Documentation\n• Custom Software\n• AI & Machine Learning');
   const messagesEndRef = useRef(null);
 
   const scrollRef = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    const loadServices = async () => {
+      try {
+        const data = await api.services.getAll();
+        if (data && data.length > 0) {
+          const serviceList = data.map(s => `• ${s.title}`).join('\n');
+          setDynamicServices(`We specialize in: \n${serviceList}`);
+        }
+      } catch (err) {
+        console.error('Failed to load bot services:', err);
+      }
+    };
+    loadServices();
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -31,7 +48,7 @@ const Chatbot = () => {
     
     if (topic === 'services') {
       userMsg = 'What services do you offer?';
-      botReply = 'We specialize in: \n• Journal & Research Papers\n• SRS & UML Project Documentation\n• Mini & Major Custom Software\n• AI & Machine Learning models\n• Full-Stack Web Development\n• Cyberpunk UI Logo Design';
+      botReply = dynamicServices;
     } else if (topic === 'order') {
       userMsg = 'How do I place an order?';
       botReply = 'You can click on the "Order Now" button in our navigation bar, or select any service card and press "Order Now" to go to our Customer Order Portal. You can upload project files and set your budget there!';
@@ -76,6 +93,8 @@ const Chatbot = () => {
         botReply = "You can track your order using the 'Track Project' option in the navbar. Simply sign in to view your orders, or enter your Order ID there.";
       } else if (lower.includes('instagram') || lower.includes('ig')) {
         botReply = "Follow our nodes on Instagram @DATA_FLOW.IO for portfolio showcases and active updates.";
+      } else if (lower.includes('service') || lower.includes('what do you do') || lower.includes('offer')) {
+        botReply = dynamicServices;
       } else if (lower.includes('ai') || lower.includes('ml') || lower.includes('machine') || lower.includes('model')) {
         botReply = "We develop custom ML pipelines, NLP bots, computer vision classifiers, and predictive analytics models using TensorFlow, PyTorch, and FastAPI. Tell us your requirements!";
       }
