@@ -18,10 +18,7 @@ import contactRoutes from './routes/contactRoutes.js';
 dotenv.config();
 
 // Connect to MongoDB
-connectDB().then(() => {
-  // Seed Database with initial datasets
-  seedDatabase();
-});
+connectDB();
 
 const app = express();
 
