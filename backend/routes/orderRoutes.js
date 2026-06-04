@@ -12,6 +12,7 @@ import {
   fixOrderAmount,
   acceptOrderAmount,
   markOrderReviewed,
+  deleteOrder,
 } from '../controllers/orderController.js';
 import { protect, admin } from '../middleware/auth.js';
 
@@ -62,6 +63,7 @@ router.get('/tracker/:id', getOrderStatusPublic);
 
 router.put('/:id/fix-amount', protect, admin, fixOrderAmount);
 router.put('/:id/accept-amount', protect, acceptOrderAmount);
-router.put('/:id/reviewed', markOrderReviewed);
+router.route('/:id/review').put(protect, markOrderReviewed);
+router.route('/:id').delete(protect, admin, deleteOrder);
 
 export default router;

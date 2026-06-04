@@ -93,6 +93,34 @@ const AdminDashboard = ({ token, user }) => {
     }
   };
 
+  const handleDeleteOrder = async (orderId) => {
+    if (!window.confirm('Are you sure you want to permanently delete this order?')) return;
+    try {
+      setLoading(true);
+      await api.orders.delete(orderId, token);
+      const updated = await api.orders.getAll(token);
+      setOrders(updated);
+    } catch (err) {
+      alert(err.message || 'Failed to delete order.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteFeedback = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this client review?')) return;
+    try {
+      setLoading(true);
+      await api.feedback.delete(id, token);
+      const updated = await api.feedback.getAll();
+      setFeedbacks(updated);
+    } catch (err) {
+      alert(err.message || 'Failed to delete feedback.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // --- Project CRUD ---
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
@@ -502,6 +530,15 @@ const AdminDashboard = ({ token, user }) => {
                                 View GPay Receipt
                               </a>
                             )}
+                            
+                            <button
+                              onClick={() => handleDeleteOrder(order._id)}
+                              className="w-full mt-2 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded bg-red-950/40 hover:bg-red-900 border border-red-500/30 text-[9px] font-rajdhani text-red-300 uppercase tracking-widest font-bold transition-all text-center"
+                              title="Delete Order"
+                            >
+                              <Trash2 className="w-2.5 h-2.5" />
+                              Delete Order
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -848,6 +885,13 @@ const AdminDashboard = ({ token, user }) => {
                       </div>
                       <p className="text-xs text-slate-300">"{fb.review}"</p>
                     </div>
+                    <button
+                      onClick={() => handleDeleteFeedback(fb._id)}
+                      className="p-2 rounded bg-red-950/30 hover:bg-red-900/40 border border-red-900/30 text-red-400 transition-colors"
+                      title="Delete Review"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 ))}
                 {feedbacks.length === 0 && (

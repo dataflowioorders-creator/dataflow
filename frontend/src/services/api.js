@@ -273,12 +273,23 @@ export const api = {
       return response.json();
     },
     markReviewed: async (id) => {
-      const response = await fetch(`${API_BASE_URL}/orders/${id}/reviewed`, {
+      const response = await fetch(`${API_BASE_URL}/orders/${id}/review`, {
         method: 'PUT',
       });
       if (!response.ok) {
         const err = await response.json();
         throw new Error(err.message || 'Failed to mark as reviewed');
+      }
+      return response.json();
+    },
+    delete: async (id, token) => {
+      const response = await fetch(`${API_BASE_URL}/orders/${id}`, {
+        method: 'DELETE',
+        headers: getHeaders(token),
+      });
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message || 'Failed to delete order');
       }
       return response.json();
     },
@@ -300,6 +311,17 @@ export const api = {
       if (!response.ok) {
         const err = await response.json();
         throw new Error(err.message || 'Failed to submit feedback');
+      }
+      return response.json();
+    },
+    delete: async (id, token) => {
+      const response = await fetch(`${API_BASE_URL}/feedback/${id}`, {
+        method: 'DELETE',
+        headers: getHeaders(token),
+      });
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message || 'Failed to delete feedback');
       }
       return response.json();
     },
