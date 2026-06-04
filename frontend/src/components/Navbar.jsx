@@ -45,7 +45,7 @@ const Navbar = ({ user, handleLogout }) => {
           <img 
             src={logoImg} 
             alt="DATA FLOW" 
-            className="w-10 h-10 object-contain rounded-xl overflow-hidden group-hover:scale-105 transition-transform duration-300"
+            className="w-10 h-10 object-contain rounded-[5px] group-hover:scale-105 transition-transform duration-300"
           />
           <span className="font-orbitron font-bold text-xl tracking-wider bg-gradient-to-r from-white via-purple-300 to-cyber-cyan bg-clip-text text-transparent">
             DATA FLOW
