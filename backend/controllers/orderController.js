@@ -12,8 +12,9 @@ export const createOrder = async (req, res) => {
     let fileName = '';
 
     if (req.file) {
-      // If a file was uploaded via multer, save its path
-      fileUrl = `/uploads/${req.file.filename}`;
+      // Convert to Base64 to bypass ephemeral file systems
+      const base64Data = req.file.buffer.toString('base64');
+      fileUrl = `data:${req.file.mimetype};base64,${base64Data}`;
       fileName = req.file.originalname;
     }
 
@@ -80,7 +81,8 @@ export const updateOrderStatus = async (req, res) => {
       }
       
       if (req.file) {
-        order.deliveredFileUrl = `/uploads/${req.file.filename}`;
+        const base64Data = req.file.buffer.toString('base64');
+        order.deliveredFileUrl = `data:${req.file.mimetype};base64,${base64Data}`;
         order.deliveredFileName = req.file.originalname;
         order.status = 'Completed'; // Automatically complete order on project upload
       }
@@ -107,7 +109,8 @@ export const payOrder = async (req, res) => {
       order.paidAt = Date.now();
 
       if (req.file) {
-        order.paymentScreenshotUrl = `/uploads/${req.file.filename}`;
+        const base64Data = req.file.buffer.toString('base64');
+        order.paymentScreenshotUrl = `data:${req.file.mimetype};base64,${base64Data}`;
         order.paymentScreenshotName = req.file.originalname;
       }
 

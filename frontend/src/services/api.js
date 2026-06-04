@@ -12,6 +12,12 @@ const getHeaders = (token) => {
   return headers;
 };
 
+export const getFileUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('data:') || url.startsWith('http')) return url;
+  return `${BASE_URL}${url}`;
+};
+
 export const api = {
   // Auth API
   auth: {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api, BASE_URL } from '../services/api';
+import { api, getFileUrl } from '../services/api';
 import { Search, ClipboardList, CheckCircle2, Circle, Clock, Loader2, ArrowRight, Download, CreditCard, Star } from 'lucide-react';
 
 const StatusTrackerPage = ({ token, user }) => {
@@ -280,7 +280,7 @@ const StatusTrackerPage = ({ token, user }) => {
                   singleOrder.deliveredFileUrl ? (
                     singleOrder.isReviewed ? (
                       <a 
-                        href={`${BASE_URL}${singleOrder.deliveredFileUrl}`} 
+                        href={getFileUrl(singleOrder.deliveredFileUrl)} 
                         download={singleOrder.deliveredFileName}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -414,7 +414,7 @@ const StatusTrackerPage = ({ token, user }) => {
                         order.deliveredFileUrl ? (
                           order.isReviewed ? (
                             <a 
-                              href={`${BASE_URL}${order.deliveredFileUrl}`} 
+                              href={getFileUrl(order.deliveredFileUrl)} 
                               download={order.deliveredFileName}
                               target="_blank"
                               rel="noopener noreferrer"

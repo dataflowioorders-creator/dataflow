@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { api, BASE_URL } from '../services/api';
+import { api, getFileUrl } from '../services/api';
 import { 
   LayoutDashboard, ClipboardList, ShieldAlert, Cpu, 
   Trash2, Plus, RefreshCw, Star, Download, Upload, Sparkles, Edit3, Settings, X, Image
@@ -374,7 +374,7 @@ const AdminDashboard = ({ token, user }) => {
                               </span>
                               {order.paymentScreenshotUrl && (
                                 <a 
-                                  href={`${BASE_URL}${order.paymentScreenshotUrl}`} 
+                                  href={getFileUrl(order.paymentScreenshotUrl)} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-1 text-[9px] text-cyber-cyan hover:underline font-mono"
@@ -486,7 +486,7 @@ const AdminDashboard = ({ token, user }) => {
                                   {order.deliveredFileName}
                                 </span>
                                 <a 
-                                  href={`${BASE_URL}${order.deliveredFileUrl}`} 
+                                  href={getFileUrl(order.deliveredFileUrl)} 
                                   download={order.deliveredFileName}
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -520,7 +520,7 @@ const AdminDashboard = ({ token, user }) => {
                             {/* Inline Payment Screenshot Receipt */}
                             {order.paymentScreenshotUrl && (
                               <a 
-                                href={`${BASE_URL}${order.paymentScreenshotUrl}`} 
+                                href={getFileUrl(order.paymentScreenshotUrl)} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="w-full flex items-center justify-center gap-1.5 px-2 py-1.5 rounded bg-cyan-950/40 hover:bg-cyan-900 border border-cyan-500/30 text-[9px] font-rajdhani text-cyan-300 uppercase tracking-widest font-bold transition-all text-center"
