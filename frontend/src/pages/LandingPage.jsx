@@ -143,7 +143,7 @@ const LandingPage = ({ user }) => {
     <div className="bg-hexagons bg-cyber-grid min-h-screen">
 
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-6 py-24 md:pt-32 overflow-hidden">
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
 
         {/* Futuristic glowing backdrop nodes */}
         <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-purple-600/10 blur-[120px] pointer-events-none"></div>
