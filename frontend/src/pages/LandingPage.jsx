@@ -151,7 +151,7 @@ const LandingPage = ({ user }) => {
 
         <div className="max-w-4xl mx-auto z-10 flex flex-col items-center">
           {/* Cyber Header Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-950/40 border border-purple-500/20 text-purple-300 text-xs font-rajdhani uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-purple-950/40 border border-purple-500/20 text-purple-300 text-xs font-rajdhani uppercase tracking-widest mb-6">
             <span className="w-2 h-2 rounded-full bg-cyber-cyan animate-pulse"></span>
             Intelligence Grid Activated
           </div>
