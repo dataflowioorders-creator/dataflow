@@ -399,7 +399,7 @@ const AdminDashboard = ({ token, user }) => {
                             <p className="text-[11px] text-slate-300 leading-snug mb-2 line-clamp-3">{order.description}</p>
                             {order.fileUrl && (
                               <a 
-                                href={`${BASE_URL}${order.fileUrl}`} 
+                                href={getFileUrl(order.fileUrl)} 
                                 download
                                 className="inline-flex items-center gap-1 text-[10px] text-cyber-cyan hover:underline font-mono"
                               >

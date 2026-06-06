@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api, getFileUrl } from '../services/api';
+import { api, getFileUrl, BASE_URL } from '../services/api';
 import { Search, ClipboardList, CheckCircle2, Circle, Clock, Loader2, ArrowRight, Download, CreditCard, Star } from 'lucide-react';
 
 const StatusTrackerPage = ({ token, user }) => {
