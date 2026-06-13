@@ -499,23 +499,17 @@ const AdminDashboard = ({ token, user }) => {
                             )}
 
                             {/* Delivery Action Button */}
-                            {order.paymentScreenshotUrl ? (
-                              <div className="w-full">
-                                <label className="cursor-pointer flex items-center justify-center gap-1 px-2 py-1.5 rounded bg-purple-950/40 hover:bg-purple-900 border border-purple-500/20 text-[9px] font-rajdhani text-purple-300 uppercase tracking-widest font-bold transition-all text-center w-full">
-                                  <Upload className="w-2.5 h-2.5" />
-                                  {order.deliveredFileUrl ? 'Replace Delivery' : 'Deliver Project'}
-                                  <input 
-                                    type="file" 
-                                    className="hidden" 
-                                    onChange={(e) => handleDeliveryUpload(order._id, e.target.files[0])} 
-                                  />
-                                </label>
-                              </div>
-                            ) : (
-                              <div className="text-center p-2 rounded bg-yellow-950/20 border border-yellow-800/40 text-yellow-500 font-rajdhani text-[9px] uppercase font-bold tracking-widest leading-relaxed">
-                                🔒 Awaiting GPay Receipt
-                              </div>
-                            )}
+                            <div className="w-full">
+                              <label className="cursor-pointer flex items-center justify-center gap-1 px-2 py-1.5 rounded bg-purple-950/40 hover:bg-purple-900 border border-purple-500/20 text-[9px] font-rajdhani text-purple-300 uppercase tracking-widest font-bold transition-all text-center w-full">
+                                <Upload className="w-2.5 h-2.5" />
+                                {order.deliveredFileUrl ? 'Replace Delivery' : 'Deliver Project'}
+                                <input 
+                                  type="file" 
+                                  className="hidden" 
+                                  onChange={(e) => handleDeliveryUpload(order._id, e.target.files[0])} 
+                                />
+                              </label>
+                            </div>
 
                             {/* Inline Payment Screenshot Receipt */}
                             {order.paymentScreenshotUrl && (
